@@ -41,14 +41,7 @@ if [ ! -d "$SRCDIR/sources/$1" ]; then
 				wget -P $SRCDIR/sources/$1 $source
 				unzipme=$(ls $SRCDIR/sources/$1/*.tar.*)
 				if [ -n "$unzipme" ]; then
-						case "$unzipme" in
-								*.tar.gz)   tarflag="-xzvf" ;;
-								*.tar.bz2)  tarflag="-xjvf" ;;
-								*.tar.xz)   tarflag="-xJvf" ;;
-								*.tar)      tarflag="-xvf" ;;
-								*)          echo "Unsupported tar format: $unzipme" >&2; exit 1 ;;
-						esac
-						tar $tarflag "$unzipme" -C $SRCDIR/sources/$1 >&2
+						tar -xvf "$unzipme" -C "$SRCDIR/sources/$1" >&2
 						rm $unzipme
 						if [ $(find $SRCDIR/sources/$1 -mindepth 1 -maxdepth 1 -type d | wc -l) -eq 1 ]; then
 								single=$(find $SRCDIR/sources/$1 -mindepth 1 -maxdepth 1 -type d)
